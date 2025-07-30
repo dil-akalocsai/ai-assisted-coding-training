@@ -8,6 +8,7 @@ A React-based Todo application built with TypeScript, Material UI, and Atlas UI 
 
 - ✅ Create, read, update, and delete todo items
 - ✅ Mark todos as completed
+- ✅ Session persistence with browser storage
 - ✅ Responsive design with Material UI
 - ✅ TypeScript for type safety
 - ✅ React Context for state management
@@ -43,6 +44,32 @@ Visit `http://localhost:5173` to view the app.
 - `npm run test` - Run tests
 - `npm run preview` - Preview production build locally
 
+## Session Persistence
+
+The Todo app automatically persists your tasks to `sessionStorage`, ensuring your todo list survives page refreshes within the same browser session.
+
+### Key Features
+
+- **Automatic Saving**: All changes are automatically saved to browser session storage
+- **Data Validation**: Corrupt or invalid data is safely handled and cleared
+- **Error Handling**: Storage quota errors are gracefully handled with user notifications
+- **Session Scope**: Data persists only for the current browser session (cleared when browser is closed)
+
+### Limitations
+
+- Data is only available within the same browser session
+- Storage quota limitations may prevent saving large amounts of data
+- Data is not synchronized across different browser tabs or devices
+- Incognito/private browsing mode may have additional restrictions
+
+### Technical Details
+
+- **Storage Key**: `todos`
+- **Data Format**: JSON array of Todo objects with Date serialization
+- **Validation**: Ensures each todo has `id: string`, `title: string`, `description: string`, `completed: boolean`, `createdAt: Date`
+- **Error Recovery**: Automatically clears corrupt data and falls back to empty state
+- **User Feedback**: Toast notifications for storage quota exceeded errors
+
 ## Project Structure
 
 The project follows a feature-based organization:
@@ -52,9 +79,13 @@ src/
 ├── __tests__/                   # Test files
 ├── assets/                      # Media assets
 ├── components/                  # React components
+│   ├── Toast/                   # Toast notification component
+│   └── ...
 ├── contexts/                    # React contexts
 ├── providers/                   # React providers
 ├── types/                       # TypeScript type definitions
+├── utils/                       # Utility functions
+│   └── sessionStorage.ts        # Session storage helpers
 └── ...
 ```
 
