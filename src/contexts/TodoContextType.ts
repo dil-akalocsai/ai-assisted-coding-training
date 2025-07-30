@@ -1,5 +1,4 @@
-import { createContext } from 'react';
-import type { Todo } from '../types/Todo';
+import { Todo } from '../types/Todo';
 
 export interface TodoContextType {
   todos: Todo[];
@@ -7,6 +6,5 @@ export interface TodoContextType {
   editTodo: (id: string, updates: Partial<Todo>) => void;
   toggleTodoCompletion: (id: string) => void;
   deleteTodo: (id: string) => void;
+  storageError: string | null;
 }
-
-export const TodoContext = createContext<TodoContextType | undefined>(undefined);
